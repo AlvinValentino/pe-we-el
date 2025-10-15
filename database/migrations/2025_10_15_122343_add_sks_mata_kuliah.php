@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('table_matakuliah', function (Blueprint $table) {
-            $table->foreignId('dosen_pengampu')->constained('table_dosen')->after('jurusan');
+            $table->integer('sks')->after('jurusan');
         });
     }
 
@@ -20,9 +20,9 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {   
+    {
         Schema::table('table_matakuliah', function (Blueprint $table) {
-            $table->dropColumn('dosen_pengampu');
+            $table->dropColumn('sks');
         });
     }
 };

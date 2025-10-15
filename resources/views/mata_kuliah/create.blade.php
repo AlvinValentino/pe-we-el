@@ -33,6 +33,10 @@
                         <td colspan="3"><input type="text" name="nama_mk" class="w-100" value="{{ $data->nama_mk ?? '' }}"></td>
                     </tr>
                     <tr>
+                        <td>SKS</td>
+                        <td colspan="3"><input type="number" name="sks" class="w-100" value="{{ $data->sks ?? '' }}"></td>
+                    </tr>
+                    <tr>
                         <td rowspan="3">Jurusan</td>
                         <td colspan="3">
                             <input type="radio" name="jurusan" value="Bisnis Digital" {{ ($data->jurusan ?? '') == 'Bisnis Digital' ? 'checked' : '' }}> Bisnis Digital
@@ -46,6 +50,17 @@
                     <tr>
                         <td colspan="3">
                             <input type="radio" name="jurusan" value="Sistem dan Teknologi Informasi" {{ ($data->jurusan ?? '') == 'Sistem dan Teknologi Informasi' ? 'checked' : '' }}> Sistem dan Teknologi Informasi
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nama MK</td>
+                        <td colspan="3">
+                            <select name="dosen_pengampu" class="w-100" required>
+                                <option value="" selected disabled>-- Pilih Dosen Pengampu --</option>
+                                @foreach($dosens as $dosen)
+                                <option value="{{ $dosen->id }}" {{ ($data->dosen_pengampu ?? '') == $dosen->id ? 'selected' : '' }}>{{ $dosen->nama_dosen }}</option>
+                                @endforeach
+                            </select>
                         </td>
                     </tr>
                     <tr>

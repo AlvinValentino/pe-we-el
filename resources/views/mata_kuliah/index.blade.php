@@ -31,6 +31,8 @@
                     <th scope="col">Kode MK</th>
                     <th scope="col">Nama MK</th>
                     <th scope="col">Jurusan</th>
+                    <th scope="col">SKS</th>
+                    <th scope="col">Dosen Pengampu</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -41,6 +43,8 @@
                         <td>{{ $matakuliah['kode_mk'] }}</td>
                         <td>{{ $matakuliah['nama_mk'] }}</td>
                         <td>{{ $matakuliah['jurusan'] }}</td>
+                        <td>{{ $matakuliah['sks'] }}</td>
+                        <td>{{ $matakuliah['dosen'] ? $matakuliah['dosen']['nama_dosen'] : '' }}</td>
                         <td class="d-flex gap-2 justify-content-center">
                             <a href="{{ route('matakuliah.edit-form', $matakuliah['id']) }}">
                                 <button type="button" class="btn btn-warning">Edit</button>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\KrsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,3 +30,12 @@ Route::get('/edit-dosen/{id}', [DosenController::class, 'edit'])->name('dosen.ed
 Route::post('/store-dosen', [DosenController::class, 'store'])->name('dosen.store');
 Route::put('/update-dosen/{id}', [DosenController::class, 'update'])->name('dosen.update');
 Route::delete('/delete-dosen/{id}', [DosenController::class, 'destroy'])->name('dosen.delete');
+
+Route::get('/krs', [KrsController::class, 'index'])->name('krs.index');
+Route::get('/create-krs', [KrsController::class, 'create'])->name('krs.create-form');
+Route::get('/edit-krs/{id}', [KrsController::class, 'edit'])->name('krs.edit-form');
+Route::post('/store-krs', [KrsController::class, 'store'])->name('krs.store');
+Route::put('/update-krs/{id}', [KrsController::class, 'update'])->name('krs.update');
+Route::delete('/delete-krs/{id}', [KrsController::class, 'destroy'])->name('krs.delete');
+
+Route::get('/get-mata-kuliah-by-mahasiswa/{mahasiswa_id}', [KrsController::class, 'getMataKuliahByMahasiswa'])->name('krs.get-mata-kuliah-by-mahasiswa');

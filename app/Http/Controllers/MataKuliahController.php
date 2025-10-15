@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MataKuliah;
+use App\Models\Dosen;
 
 class MataKuliahController extends Controller
 {
     public function index() {
-        $getMataKuliah = MataKuliah::get();
+        $getMataKuliah = MataKuliah::with('dosen')->get();
         return view('mata_kuliah.index', ['matakuliahs' => $getMataKuliah]);
     }
 
     public function create() {
-        return view('mata_kuliah.create', ['type' => 'Create']);
+        $getDosen = Dosen::get();
+        return view('mata_kuliah.create', ['type' => 'Create', 'dosens' => $getDosen]);
     }
 
     public function edit($id) {
         $data = MataKuliah::findOrFail($id);
-        return view('mata_kuliah.create', ['type' => 'Edit', 'data' => $data]);
+        $getDosen = Dosen::get();
+        return view('mata_kuliah.create', ['type' => 'Edit', 'data' => $data, 'dosens' => $getDosen]);
     }
 
     public function store(Request $request) {
@@ -26,6 +29,8 @@ class MataKuliahController extends Controller
             'kode_mk' => $request->kode_mk,
             'nama_mk' => $request->nama_mk,
             'jurusan' => $request->jurusan,
+            'sks' => $request->sks,
+            'dosen_pengampu' => $request->dosen_pengampu
         ]);
 
         if($data) {
@@ -40,6 +45,8 @@ class MataKuliahController extends Controller
             'kode_mk' => $request->kode_mk,
             'nama_mk' => $request->nama_mk,
             'jurusan' => $request->jurusan,
+            'sks' => $request->sks,
+            'dosen_pengampu' => $request->dosen_pengampu
         ]);
 
         if($data) {

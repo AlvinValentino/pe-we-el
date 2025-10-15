@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('table_matakuliah', function (Blueprint $table) {
-            $table->foreignId('dosen_pengampu')->constained('table_dosen')->after('jurusan');
+        Schema::table('table_mahasiswa', function (Blueprint $table) {
+            $table->integer('max_sks')->default(24)->after('jurusan');
         });
     }
 
@@ -20,9 +20,9 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {   
-        Schema::table('table_matakuliah', function (Blueprint $table) {
-            $table->dropColumn('dosen_pengampu');
+    {
+        Schema::table('table_mahasiswa', function (Blueprint $table) {
+            $table->dropColumn('max_sks');
         });
     }
 };
