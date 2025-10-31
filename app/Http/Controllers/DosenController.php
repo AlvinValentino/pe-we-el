@@ -25,17 +25,21 @@ class DosenController extends Controller
     }
 
     public function store(Request $request) {
-        $data = Dosen::create([
-            'nip' => $request->nip,
-            'nama_dosen' => $request->nama_dosen,
-            'pendidikan_terakhir' => $request->pendidikan_terakhir,
-            'jurusan' => $request->jurusan,
+        $validated = $request->validate([
+            'nip' => ['required', 'string', 'max:30', 'unique:dosen,nip'],
+            'nama_dosen' => ['required', 'string', 'max:100'],
+            'pendidikan_terakhir' => ['required', 'string', 'max:50'],
+            'jurusan' => ['required', 'string', 'max:100'],
         ]);
 
-        MataKuliah::whereIn('id', $request->matakuliah)
-            ->update(['dosen_pengampu' => $data->id]);
+        $data = Dosen::create([
+            'nip' => $validated['nip'],
+            'nama_dosen' => $validated['nama_dosen'],
+            'pendidikan_terakhir' => $validated['pendidikan_terakhir'],
+            'jurusan' => $validated['jurusan'],
+        ]);
 
-        if($data) {
+        if ($data) {
             return redirect()->route('dosen.index')->with('success', 'Data Berhasil Ditambahkan');
         } else {
             return redirect()->route('dosen.create-form')->with('error', 'Data Gagal Ditambahkan');
@@ -43,24 +47,27 @@ class DosenController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $data = Dosen::findOrFail($id)->update([
-            'nip' => $request->nip,
-            'nama_dosen' => $request->nama_dosen,
-            'pendidikan_terakhir' => $request->pendidikan_terakhir,
-            'jurusan' => $request->jurusan,
+        $validated = $request->validate([
+            'nip' => ['required', 'string', 'max:30', 'unique:dosen,nip,' . $id],
+            'nama_dosen' => ['required', 'string', 'max:100'],
+            'pendidikan_terakhir' => ['required', 'string', 'max:50'],
+            'jurusan' => ['required', 'string', 'max:100'],
         ]);
 
-        MataKuliah::where('dosen_pengampu', $id)->update(['dosen_pengampu' => null]);
+        $data = Dosen::findOrFail($id)->update([
+            'nip' => $validated['nip'],
+            'nama_dosen' => $validated['nama_dosen'],
+            'pendidikan_terakhir' => $validated['pendidikan_terakhir'],
+            'jurusan' => $validated['jurusan'],
+        ]);
 
-        MataKuliah::whereIn('id', $request->matakuliah)
-            ->update(['dosen_pengampu' => $id]);
-
-        if($data) {
+        if ($data) {
             return redirect()->route('dosen.index')->with('success', 'Data Berhasil Diupdate');
         } else {
             return redirect()->route('dosen.update-form', ['id' => $id])->with('error', 'Data Gagal Diupdate');
         }
     }
+
 
     public function destroy($id) {
         $data = Dosen::where('id', $id)->delete();

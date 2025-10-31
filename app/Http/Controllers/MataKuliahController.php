@@ -25,15 +25,17 @@ class MataKuliahController extends Controller
     }
 
     public function store(Request $request) {
-        $data = MataKuliah::create([
-            'kode_mk' => $request->kode_mk,
-            'nama_mk' => $request->nama_mk,
-            'jurusan' => $request->jurusan,
-            'sks' => $request->sks,
-            'dosen_pengampu' => $request->dosen_pengampu
+        $validated = $request->validate([
+            'kode_mk' => ['required', 'string', 'max:10', 'unique:mata_kuliah,kode_mk'],
+            'nama_mk' => ['required', 'string', 'max:100'],
+            'jurusan' => ['required', 'string', 'max:100'],
+            'sks' => ['required', 'integer', 'min:1', 'max:6'],
+            'dosen_pengampu' => ['required', 'exists:dosen,id'],
         ]);
 
-        if($data) {
+        $data = MataKuliah::create($validated);
+
+        if ($data) {
             return redirect()->route('matakuliah.index')->with('success', 'Data Berhasil Ditambahkan');
         } else {
             return redirect()->route('matakuliah.create-form')->with('error', 'Data Gagal Ditambahkan');
@@ -41,15 +43,17 @@ class MataKuliahController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $data = MataKuliah::findOrFail($id)->update([
-            'kode_mk' => $request->kode_mk,
-            'nama_mk' => $request->nama_mk,
-            'jurusan' => $request->jurusan,
-            'sks' => $request->sks,
-            'dosen_pengampu' => $request->dosen_pengampu
+        $validated = $request->validate([
+            'kode_mk' => ['required', 'string', 'max:10', 'unique:mata_kuliah,kode_mk,' . $id],
+            'nama_mk' => ['required', 'string', 'max:100'],
+            'jurusan' => ['required', 'string', 'max:100'],
+            'sks' => ['required', 'integer', 'min:1', 'max:6'],
+            'dosen_pengampu' => ['required', 'exists:dosen,id'],
         ]);
 
-        if($data) {
+        $data = MataKuliah::findOrFail($id)->update($validated);
+
+        if ($data) {
             return redirect()->route('matakuliah.index')->with('success', 'Data Berhasil Diupdate');
         } else {
             return redirect()->route('matakuliah.update-form', ['id' => $id])->with('error', 'Data Gagal Diupdate');

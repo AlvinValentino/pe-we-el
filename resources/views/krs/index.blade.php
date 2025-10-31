@@ -22,6 +22,10 @@
             <a href="{{ route('matakuliah.index') }}">
                 <button type="button" class="btn btn-secondary">Data Mata Kuliah</button>
             </a>
+
+            <a href="{{ route('mahasiswa.index') }}">
+                <button type="button" class="btn btn-secondary">Data Mahasiswa</button>
+            </a>
         </div>
 
         <table class="table table-striped table-striped-columns mt-3">
@@ -33,7 +37,6 @@
                     <th scope="col">Kode MK</th>
                     <th scope="col">Nama MK</th>
                     <th scope="col">SKS</th>
-                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,16 +48,6 @@
                         <td>{{ $data['mata_kuliah']['kode_mk'] }}</td>
                         <td>{{ $data['mata_kuliah']['nama_mk'] }}</td>
                         <td>{{ $data['mata_kuliah']['sks'] }}</td>
-                        <td class="d-flex gap-2 justify-content-center">
-                            <a href="{{ route('krs.edit-form', $krs['id']) }}">
-                                <button type="button" class="btn btn-warning">Edit</button>
-                            </a>
-                            <form action="{{ route('krs.delete', $krs['id']) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="_method" value="delete" />
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </td>
                     </tr>
                 @endforeach
             </tbody>

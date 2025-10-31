@@ -38,9 +38,8 @@
                     <tr>
                         <td>Mata Kuliah</td>
                         <td colspan="3">
-                            <select name="mata_kuliah_id" id="mata_kuliah_id" class="w-100">
+                            <select name="matakuliah_id" id="matakuliah_id" class="w-100">
                                 <option value="" selected disabled>-- Pilih Mata Kuliah --</option>
-
                             </select>
                         </td>
                     </tr>
@@ -61,7 +60,7 @@ $(document).ready(function() {
     $('#mahasiswa_id').on('change', function() {
         let mahasiswaId = $(this).val();
 
-        $('#mata_kuliah_id').html('<option value="" selected disabled>-- Pilih Mata Kuliah --</option>');
+        $('#matakuliah_id').html('<option value="" selected disabled>-- Pilih Mata Kuliah --</option>');
 
         if (mahasiswaId) {
             $.ajax({
@@ -69,11 +68,11 @@ $(document).ready(function() {
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
-                    $('#mata_kuliah_id').empty();
-                    $('#mata_kuliah_id').append('<option value="" selected disabled>-- Pilih Mata Kuliah --</option>');
+                    $('#matakuliah_id').empty();
+                    $('#matakuliah_id').append('<option value="" selected disabled>-- Pilih Mata Kuliah --</option>');
 
                     $.each(response, function(key, matakuliah) {
-                        $('#mata_kuliah_id').append(
+                        $('#matakuliah_id').append(
                             `<option value="${matakuliah.id}">${matakuliah.kode_mk} - ${matakuliah.nama_mk}</option>`
                         );
                     });

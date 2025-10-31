@@ -22,6 +22,10 @@
             <a href="{{ route('dosen.index') }}">
                 <button type="button" class="btn btn-secondary">Data Dosen</button>
             </a>
+
+            <a href="{{ route('krs.index') }}">
+                <button type="button" class="btn btn-secondary">Data KRS</button>
+            </a>
         </div>
 
         <table class="table table-striped table-striped-columns mt-3">

@@ -63,18 +63,6 @@
                             <input type="radio" name="jurusan" value="Sistem dan Teknologi Informasi" {{ ($data->jurusan ?? '') == 'Sistem dan Teknologi Informasi' ? 'checked' : '' }}> Sistem dan Teknologi Informasi
                         </td>
                     </tr>
-
-                    <tr>
-                        <td>Mengajar Mata Kuliah</td>
-                        <td colspan="3">
-                            <select name="matakuliah" class="w-100">
-                                <option value="" selected disabled>-- Pilih Mata Kuliah --</option>
-                                @foreach($matakuliahs as $matakuliah)
-                                    <option value="{{ $matakuliah->id }}" {{ ($matakuliah->pendidikan_terakhir ?? '') == $matakuliah->nama_mk ? 'selected' : '' }}>{{ $matakuliah->nama_mk }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                    </tr>
         
                     <tr>
                         <td colspan="3"><button type="submit">{{ $type }}</button></td>

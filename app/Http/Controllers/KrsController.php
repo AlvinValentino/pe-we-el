@@ -26,11 +26,24 @@ class KrsController extends Controller
         
         $getMataKuliah = MataKuliah::where('jurusan', 'Sistem dan Teknologi Informasi')->where('sks', '<=', (24 - $totalSKS))->get();
 
-        dd($totalSKS, $getMataKuliah);
+        return response()->json($getMataKuliah);
+    }
 
-        // Atau jika semua mata kuliah tersedia:
-        // $matakuliahs = MataKuliah::select('id', 'kode_mk', 'nama_mk')->get();
+    public function store(Request $request) {
+        $validated = $request->validate([
+            'mahasiswa_id' => ['required', 'exists:mahasiswa,id'],
+            'matakuliah_id' => ['required', 'exists:mata_kuliah,id'],
+        ]);
 
-        return response()->json($matakuliahs);
+        $data = Krs::create([
+            'mahasiswa_id' => $validated['mahasiswa_id'],
+            'matakuliah_id' => $validated['matakuliah_id'],
+        ]);
+
+        if($data) {
+            return redirect()->route('krs.index')->with('success', 'Data Berhasil Ditambahkan');
+        } else {
+            return redirect()->route('krs.create-form')->with('error', 'Data Gagal Ditambahkan');
+        }
     }
 }

@@ -21,15 +21,18 @@ class MahasiswaController extends Controller
         return view('mahasiswa.create', ['type' => 'Edit', 'data' => $data]);
     }
 
-    public function store(Request $request) {
-        $data = Mahasiswa::create([
-            'name' => $request->name,
-            'NIM' => $request->NIM,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jurusan' => $request->jurusan,
-            'angkatan' => $request->angkatan
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'NIM' => ['required', 'string', 'max:20', 'unique:mahasiswa,NIM'],
+            'tempat_lahir' => ['required', 'string', 'max:100'],
+            'tanggal_lahir'=> ['required', 'date'],
+            'jurusan' => ['required', 'string', 'max:100'],
+            'angkatan' => ['required', 'integer'],
         ]);
+
+        $data = Mahasiswa::create($validated);
 
         if($data) {
             return redirect()->route('mahasiswa.index')->with('success', 'Data Berhasil Ditambahkan');
@@ -38,15 +41,18 @@ class MahasiswaController extends Controller
         }
     }
 
-    public function update(Request $request, $id) {
-        $data = Mahasiswa::findOrFail($id)->update([
-            'name' => $request->name,
-            'NIM' => $request->NIM,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jurusan' => $request->jurusan,
-            'angkatan' => $request->angkatan
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'NIM' => ['required', 'string', 'max:20', 'unique:mahasiswa,NIM,' . $id],
+            'tempat_lahir' => ['required', 'string', 'max:100'],
+            'tanggal_lahir' => ['required', 'date'],
+            'jurusan' => ['required', 'string', 'max:100'],
+            'angkatan' => ['required', 'integer'],
         ]);
+
+        $data = Mahasiswa::findOrFail($id)->update($validated);
 
         if($data) {
             return redirect()->route('mahasiswa.index')->with('success', 'Data Berhasil Diupdate');
